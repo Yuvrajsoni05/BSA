@@ -1,4 +1,4 @@
-# Aabharan — Jewellery storefront + business management
+# Bhavnagar Suvarnkar Association — Jewellery storefront + business management
 
 Next.js 16 (App Router) + TypeScript + Tailwind CSS v4. Two apps in one
 codebase: a public storefront and an `/admin` business-management console
