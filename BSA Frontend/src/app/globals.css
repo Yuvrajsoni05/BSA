@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  /* Light background for light theme */
+  --color-ground: #f4efe4;
+  --color-surface: #f9f7f2;
+  --color-surface-raised: #ffffff;
+
+  /* Antique gold, deliberately muted (not neon/brass) so it reads as precious, not loud */
+  --color-gold: #c9a24a;
+  --color-gold-soft: #e4cd94;
+
+  /* Deep emerald as the secondary accent — differentiates the admin/business side */
+  --color-emerald: #0f3d2e;
+  --color-emerald-soft: #1c5c46;
+
+  --color-ivory: #17120e;
+  --color-ivory-muted: #6b6058;
+
+  --color-danger: #b3432b;
+}
+
+@theme inline {
+  --color-ground: var(--color-ground);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-emerald: var(--color-emerald);
+  --color-emerald-soft: var(--color-emerald-soft);
+  --color-ivory: var(--color-ivory);
+  --color-ivory-muted: var(--color-ivory-muted);
+  --color-danger: var(--color-danger);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-ivory);
+}
+
+@layer base {
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ground);
+  }
+
+  /* Visible keyboard focus everywhere — never rely on browser default alone */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
