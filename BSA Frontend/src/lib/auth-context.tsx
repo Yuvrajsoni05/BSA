@@ -30,10 +30,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    setIsHydrated(true);
     const initAuth = async () => {
       try {
         const storedUser = Cookies.get("user");
@@ -84,10 +82,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await authAPI.logout();
     setUser(null);
   };
-
-  if (!isHydrated) {
-    return <>{children}</>;
-  }
 
   return (
     <AuthContext.Provider

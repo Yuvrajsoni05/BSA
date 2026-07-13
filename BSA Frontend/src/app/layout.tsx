@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
-import { AuthProvider } from "@/lib/auth-context";
+import { QueriesProvider } from "@/lib/query-provider";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable} h-full`}>
       <body className="flex min-h-full flex-col font-sans antialiased">
-        <AuthProvider>{children}</AuthProvider>
+        <QueriesProvider>{children}</QueriesProvider>
       </body>
     </html>
   );

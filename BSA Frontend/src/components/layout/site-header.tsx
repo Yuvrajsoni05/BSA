@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/config/site";
+import { UserNav } from "./user-nav";
 
 export function SiteHeader() {
   return (
@@ -17,6 +18,7 @@ export function SiteHeader() {
             className="h-auto"
           />
         </Link>
+        <UserNav />
       </Container>
     </header>
   );
