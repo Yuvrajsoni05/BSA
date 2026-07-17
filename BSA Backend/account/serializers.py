@@ -4,8 +4,10 @@ from .models import AccountDetail
 from django.contrib.auth import authenticate
 from rest_framework.serializers import ModelSerializer
 from django.db import models
+from rest_framework.generics import GenericAPIView
 
 from rest_framework_simplejwt.tokens import RefreshToken
+# from BSA.BSA Backend.account.serializers import ProfileSerializer
 
 
 # class AccountDetailSerializer(serializers.ModelSerializer):
@@ -100,3 +102,17 @@ class ProfileSerializer(serializers.ModelSerializer):
             
         ]
 
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccountDetail
+        fields = [
+            "first_name",
+            "middle_name",
+            "last_name",
+            "phone",
+            "shop_name",
+            "shop_address",
+            "profile_picture",
+        ]
+    
+    

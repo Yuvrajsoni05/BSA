@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import RegisterSerializer,LoginSerializer,RegisterSerializerShop,ProfileSerializer,LogoutSerializer
+from .serializers import RegisterSerializer,LoginSerializer,RegisterSerializerShop,ProfileSerializer,LogoutSerializer,ProfileUpdateSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.serializers import Serializer
 from rest_framework import serializers
@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.template.context_processors import request
 # Create your views here.
+
 
 class RegisterView(GenericAPIView):
     serializer_class  = RegisterSerializer
@@ -74,9 +75,42 @@ class ProfileView(GenericAPIView):
             "user":{
                 "id" : request.user.id,
                 "username":request.user.username,
-                "email":request.user.email
+                "email":request.user.email,
+                "first_name":request.user.first_name,
+                "middle_name":request.user.middle_name,
+                "last_name":request.user.last_name,
+                "phone":request.user.phone,
+                "shop_name":request.user.shop_name,
+                "shop_address":request.user.shop_address,
+                "profile_picture": (
+                    request.user.profile_picture.url
+                    if request.user.profile_picture
+                    else None),
+                
+
+                
             }
         })
+class ProfileUpdate(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfileUpdateSerializer
+    def patch(self,request):
+        serializer = self.get_serializer(
+            request.user,
+            data = request.data,
+            partial = True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {
+                'message':"Profile Update successfully",
+                "user": serializer.data
+            },
+         
+        )
+        
+        
         
 class LogoutView(GenericAPIView):
     serializer_class =LogoutSerializer

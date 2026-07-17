@@ -18,7 +18,7 @@ class AccountDetail(AbstractUser):
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
     
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='user')
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='shop_owner')
     
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
