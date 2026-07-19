@@ -114,5 +114,23 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
             "shop_address",
             "profile_picture",
         ]
+
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    confirm_password = serializers.CharField(required=True)
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if not user.check_password(data['old_password']):
+           raise serializers.ValidationError("Incorrect old password.")
+        if data['new_password'] != data['confirm_password']:
+           raise serializers.ValidationError("Passwords do not match.")
+        return data
+        
+
+
     
     

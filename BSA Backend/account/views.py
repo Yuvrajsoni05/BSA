@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import RegisterSerializer,LoginSerializer,RegisterSerializerShop,ProfileSerializer,LogoutSerializer,ProfileUpdateSerializer
+from .serializers import RegisterSerializer,LoginSerializer,RegisterSerializerShop,ProfileSerializer,LogoutSerializer,ProfileUpdateSerializer,ChangePasswordSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework.serializers import Serializer
 from rest_framework import serializers
@@ -110,7 +110,20 @@ class ProfileUpdate(GenericAPIView):
          
         )
         
-        
+class ChangePasswordView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
+
+    def patch(self,request):
+        serializers = self.get_serializer(data=request.data)
+        serializers.is_valid(raise_exception=True)
+        user = request.user
+        user.set_password(serializers.validated_data['new_password'])
+        user.save()
+        return Response({
+            "message":"Password changed successfully"
+        })
+
         
 class LogoutView(GenericAPIView):
     serializer_class =LogoutSerializer

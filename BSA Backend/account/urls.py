@@ -1,4 +1,4 @@
-from .views import RegisterView,LoginView,RegisterSerializerShopView,ProfileView,LogoutView,ProfileUpdate
+from .views import RegisterView,LoginView,RegisterSerializerShopView,ProfileView,LogoutView,ProfileUpdate,ChangePasswordView
 from django.urls import path
 
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path("register/shop/",RegisterSerializerShopView.as_view(),name='register_shop'),
     path("profile/",ProfileView.as_view(),name='profile-view') ,
     path("profile/update/",ProfileUpdate.as_view(),name='profile-update'),
+    path("change-password/",ChangePasswordView.as_view(),name='change-password'),
     path("logout/",LogoutView.as_view(),name='logout')
 
     
