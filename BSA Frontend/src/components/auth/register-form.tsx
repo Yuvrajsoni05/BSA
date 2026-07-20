@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 // Registration schema with password validation
 const registerSchema = z
@@ -73,10 +74,10 @@ export function RegisterForm() {
   if (isSuccess) {
     return (
       <div className="w-full max-w-md">
-        <div className="rounded-lg border border-green-200 bg-green-50 p-8 text-center">
-          <CheckCircle className="mx-auto h-12 w-12 text-green-600" />
-          <h2 className="mt-4 text-xl font-bold text-green-900">Account Created!</h2>
-          <p className="mt-2 text-sm text-green-700">
+        <div className="rounded-lg border border-[#0f3d2e]/30 bg-[#0f3d2e]/5 p-8 text-center">
+          <CheckCircle className="mx-auto h-12 w-12 text-[#0f3d2e]" />
+          <h2 className="mt-4 text-xl font-bold text-[#0f3d2e]">Account Created!</h2>
+          <p className="mt-2 text-sm text-[#0f3d2e]/70">
             Your account has been successfully created. Redirecting to login...
           </p>
         </div>
@@ -86,9 +87,17 @@ export function RegisterForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-        <p className="mt-2 text-sm text-gray-600">
+      <div className="rounded-lg border border-[#c9a24a]/30 bg-white p-8 shadow-lg">
+        {/* Logo/Brand */}
+        <div className="mb-8 text-center">
+          <h2 className="text-xl font-bold text-[#17120e]">
+            SATVA <span className="text-[#c9a24a]">GOLD</span>
+          </h2>
+          <p className="mt-2 text-xs text-[#6b6058]">Premium Jewellery</p>
+        </div>
+
+        <h1 className="text-2xl font-bold text-[#17120e]">Create Account</h1>
+        <p className="mt-2 text-sm text-[#6b6058]">
           Join us today. It only takes a minute.
         </p>
 
@@ -105,7 +114,7 @@ export function RegisterForm() {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Full Name
             </label>
@@ -116,8 +125,8 @@ export function RegisterForm() {
               disabled={isSubmitting}
               className={`mt-2 block w-full rounded-lg border px-4 py-2 text-sm transition-colors ${
                 errors.name
-                  ? "border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                  : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
               } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
               {...register("name")}
             />
@@ -130,7 +139,7 @@ export function RegisterForm() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Email address
             </label>
@@ -141,8 +150,8 @@ export function RegisterForm() {
               disabled={isSubmitting}
               className={`mt-2 block w-full rounded-lg border px-4 py-2 text-sm transition-colors ${
                 errors.email
-                  ? "border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                  : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
               } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
               {...register("email")}
             />
@@ -155,7 +164,7 @@ export function RegisterForm() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Password
             </label>
@@ -167,8 +176,8 @@ export function RegisterForm() {
                 disabled={isSubmitting}
                 className={`block w-full rounded-lg border px-4 py-2 pr-10 text-sm transition-colors ${
                   errors.password
-                    ? "border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500"
-                    : "border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500"
+                    ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                    : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
                 } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
                 {...register("password")}
               />
@@ -176,7 +185,7 @@ export function RegisterForm() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isSubmitting}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b6058] hover:text-[#17120e] disabled:opacity-50 transition-colors"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
@@ -193,7 +202,7 @@ export function RegisterForm() {
             )}
             {/* Password requirements hint */}
             {password && !errors.password && (
-              <p className="mt-1 text-xs text-green-600">✓ Password meets requirements</p>
+              <p className="mt-1 text-xs text-[#0f3d2e]">✓ Password meets requirements</p>
             )}
           </div>
 
@@ -201,7 +210,7 @@ export function RegisterForm() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Confirm Password
             </label>
@@ -213,8 +222,8 @@ export function RegisterForm() {
                 disabled={isSubmitting}
                 className={`block w-full rounded-lg border px-4 py-2 pr-10 text-sm transition-colors ${
                   errors.confirmPassword
-                    ? "border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500"
-                    : "border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500"
+                    ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                    : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
                 } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
                 {...register("confirmPassword")}
               />
@@ -222,7 +231,7 @@ export function RegisterForm() {
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={isSubmitting}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b6058] hover:text-[#17120e] disabled:opacity-50 transition-colors"
                 aria-label={
                   showConfirmPassword ? "Hide password" : "Show password"
                 }
@@ -247,17 +256,17 @@ export function RegisterForm() {
               id="acceptTerms"
               type="checkbox"
               disabled={isSubmitting}
-              className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="mt-1 h-4 w-4 rounded border-[#c9a24a]/30 text-[#c9a24a] focus:ring-2 focus:ring-[#c9a24a] disabled:opacity-50 accent-[#c9a24a]"
               {...register("acceptTerms")}
             />
             <label
               htmlFor="acceptTerms"
-              className="ml-3 text-sm text-gray-700 select-none"
+              className="ml-3 text-sm text-[#17120e] select-none"
             >
               I agree to the{" "}
-              <a href="/terms" className="text-blue-600 hover:underline">
+              <Link href="/terms" className="text-[#c9a24a] hover:underline font-medium">
                 Terms and Conditions
-              </a>
+              </Link>
             </label>
           </div>
           {errors.acceptTerms && (
@@ -268,21 +277,21 @@ export function RegisterForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="mt-6 w-full rounded-lg bg-[#c9a24a] px-4 py-2 font-medium text-white transition-colors hover:bg-[#b89438] disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Creating account..." : "Create account"}
           </button>
         </form>
 
         {/* Footer Link */}
-        <div className="mt-6 border-t border-gray-200 pt-6 text-center text-sm text-gray-600">
+        <div className="mt-6 border-t border-[#c9a24a]/20 pt-6 text-center text-sm text-[#6b6058]">
           Already have an account?{" "}
-          <a
+          <Link
             href="/login"
-            className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            className="font-medium text-[#c9a24a] hover:text-[#17120e] hover:underline transition-colors"
           >
             Sign in
-          </a>
+          </Link>
         </div>
       </div>
     </div>

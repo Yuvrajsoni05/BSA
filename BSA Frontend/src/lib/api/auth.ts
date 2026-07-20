@@ -1,5 +1,3 @@
-import { apiClient } from "./client";
-
 export interface LoginResponse {
   access: string;
   refresh?: string;
@@ -23,48 +21,114 @@ export interface UserResponse {
   name: string;
 }
 
+/**
+ * Auth API - Calls local Route Handlers
+ * These Route Handlers will be connected to real backend API later
+ */
 export const authAPI = {
+  /**
+   * Login with email and password
+   * POST /api/auth/login
+   */
   login: async (email: string, password: string): Promise<LoginResponse> => {
-    const response = await apiClient.post<LoginResponse>("/auth/login/", {
-      email,
-      password,
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     });
-    return response.data;
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || "Login failed");
+    }
+
+    return response.json();
   },
 
+  /**
+   * Register new user
+   * POST /api/auth/register
+   */
   register: async (
     email: string,
     password: string,
     name: string
   ): Promise<RegisterResponse> => {
-    const response = await apiClient.post<RegisterResponse>(
-      "/auth/register/",
-      {
-        email,
-        password,
-        name,
-      }
-    );
-    return response.data;
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || "Registration failed");
+    }
+
+    return response.json();
   },
 
+  /**
+   * Logout user
+   * Currently just clears local data
+   */
   logout: async (): Promise<void> => {
     try {
-      await apiClient.post("/auth/logout/");
+      // In production, call logout endpoint to invalidate token
+      // await fetch("/api/auth/logout", { method: "POST" });
+      console.log("User logged out");
     } catch (error) {
       console.error("Logout error:", error);
     }
   },
 
+  /**
+   * Refresh access token
+   * POST /api/auth/refresh
+   */
   refresh: async (token: string): Promise<LoginResponse> => {
-    const response = await apiClient.post<LoginResponse>("/auth/refresh/", {
-      refresh: token,
+    const response = await fetch("/api/auth/refresh", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refresh: token }),
     });
-    return response.data;
+
+    if (!response.ok) {
+      throw new Error("Token refresh failed");
+    }
+
+    return response.json();
   },
 
+  /**
+   * Verify token and get current user
+   * GET /api/auth/verify
+   */
   getCurrentUser: async (): Promise<UserResponse> => {
-    const response = await apiClient.get<UserResponse>("/auth/user/");
-    return response.data;
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!token) {
+      throw new Error("No token found");
+    }
+
+    const response = await fetch("/api/auth/verify", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Verification failed");
+    }
+
+    return response.json();
   },
 };

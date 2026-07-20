@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 // Define validation schema - Zod ensures type safety
 const loginSchema = z.object({
@@ -66,9 +67,17 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-bold text-gray-900">Sign In</h1>
-        <p className="mt-2 text-sm text-gray-600">
+      <div className="rounded-lg border border-[#c9a24a]/30 bg-white p-8 shadow-lg">
+        {/* Logo/Brand */}
+        <div className="mb-8 text-center">
+          <h2 className="text-xl font-bold text-[#17120e]">
+            SATVA <span className="text-[#c9a24a]">GOLD</span>
+          </h2>
+          <p className="mt-2 text-xs text-[#6b6058]">Premium Jewellery</p>
+        </div>
+
+        <h1 className="text-2xl font-bold text-[#17120e]">Sign In</h1>
+        <p className="mt-2 text-sm text-[#6b6058]">
           Enter your credentials to access your account
         </p>
 
@@ -85,7 +94,7 @@ export function LoginForm() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Email address
             </label>
@@ -96,8 +105,8 @@ export function LoginForm() {
               disabled={isProcessing}
               className={`mt-2 block w-full rounded-lg border px-4 py-2 text-sm transition-colors ${
                 errors.email
-                  ? "border-red-300 bg-red-50 text-gray-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                  : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
               } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
               {...register("email")}
             />
@@ -110,7 +119,7 @@ export function LoginForm() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-900"
+              className="block text-sm font-medium text-[#17120e]"
             >
               Password
             </label>
@@ -122,8 +131,8 @@ export function LoginForm() {
                 disabled={isProcessing}
                 className={`block w-full rounded-lg border px-4 py-2 pr-10 text-sm transition-colors ${
                   errors.password
-                    ? "border-red-300 bg-red-50 text-gray-900 focus:border-red-500 focus:ring-red-500"
-                    : "border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    ? "border-red-300 bg-red-50 text-[#17120e] focus:border-red-500 focus:ring-red-500"
+                    : "border-[#c9a24a]/30 bg-white text-[#17120e] focus:border-[#c9a24a] focus:ring-[#c9a24a]"
                 } focus:outline-none focus:ring-1 disabled:bg-gray-50 disabled:text-gray-500`}
                 {...register("password")}
               />
@@ -131,7 +140,7 @@ export function LoginForm() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isProcessing}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b6058] hover:text-[#17120e] disabled:opacity-50 transition-colors"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
@@ -154,12 +163,12 @@ export function LoginForm() {
               id="rememberMe"
               type="checkbox"
               disabled={isProcessing}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="h-4 w-4 rounded border-[#c9a24a]/30 text-[#c9a24a] focus:ring-2 focus:ring-[#c9a24a] disabled:opacity-50 accent-[#c9a24a]"
               {...register("rememberMe")}
             />
             <label
               htmlFor="rememberMe"
-              className="ml-3 text-sm text-gray-700 select-none"
+              className="ml-3 text-sm text-[#17120e] select-none"
             >
               Remember me for 30 days
             </label>
@@ -169,30 +178,30 @@ export function LoginForm() {
           <button
             type="submit"
             disabled={isProcessing}
-            className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="mt-6 w-full rounded-lg bg-[#c9a24a] px-4 py-2 font-medium text-white transition-colors hover:bg-[#b89438] disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             {isProcessing ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
         {/* Footer Links */}
-        <div className="mt-6 space-y-3 border-t border-gray-200 pt-6 text-sm">
+        <div className="mt-6 space-y-3 border-t border-[#c9a24a]/20 pt-6 text-sm">
           <div className="text-center">
-            <a
+            <Link
               href="/forgot-password"
-              className="text-blue-600 hover:text-blue-700 hover:underline"
+              className="text-[#c9a24a] hover:text-[#17120e] hover:underline font-medium transition-colors"
             >
               Forgot your password?
-            </a>
+            </Link>
           </div>
-          <div className="text-center text-gray-600">
+          <div className="text-center text-[#6b6058]">
             Don't have an account?{" "}
-            <a
+            <Link
               href="/register"
-              className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+              className="font-medium text-[#c9a24a] hover:text-[#17120e] hover:underline transition-colors"
             >
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>
