@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate
 from rest_framework.serializers import ModelSerializer
 from django.db import models
 from rest_framework.generics import GenericAPIView
-
+from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+
 # from BSA.BSA Backend.account.serializers import ProfileSerializer
 
 
@@ -30,7 +31,14 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError("Passwords do not match.")
+        
+        if AccountDetail.objects.filter(username=data['username']).exists():
+            raise serializers.ValidationError({
+                
+                "message":"A user with that username already exists."
+            })
         return data
+
     
 
 
@@ -115,6 +123,25 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
             "profile_picture",
         ]
 
+    def validate(self, data):
+        if AccountDetail.objects.filter(email=data["email"]).exists():
+            raise serializers.ValidationError({
+                "status":status.HTTP_400_BAD_REQUEST,
+                "message":"Email already exists"
+            })
+            
+        if AccountDetail.objects.filter(username=data["username"]).exists():
+            raise serializers.ValidationError({
+                "status":status.HTTP_400_BAD_REQUEST,
+                "message":"username already exists"
+            })
+        if AccountDetail.objects.filter(phone=data["phone"]).exists():
+            raise serializers.ValidationError({
+                "status":status.HTTP_400_BAD_REQUEST,
+                "message": "Phone number already exists."
+            })
+        return data
+        
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -125,12 +152,32 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate(self, data):
         user = self.context['request'].user
         if not user.check_password(data['old_password']):
-           raise serializers.ValidationError("Incorrect old password.")
+           raise serializers.ValidationError({
+               "status":status.HTTP_400_BAD_REQUEST,
+    "message": "Incorrect old password."
+})
         if data['new_password'] != data['confirm_password']:
-           raise serializers.ValidationError("Passwords do not match.")
+           raise serializers.ValidationError({"status":status.HTTP_400_BAD_REQUEST,"message":"Passwords do not match.",})
         return data
         
 
 
     
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
     
+    def validate(self, data):
+        
+        if not AccountDetail.objects.filter(email=data["email"]).exists():
+            raise serializers.ValidationError({"message":"No user found with this email."})
+        return data
+class ResetPasswordSerializer(serializers.Serializer):
+    new_password  = serializers.CharField()
+    confirm_password =  serializers.CharField()
+    
+    def validate(self, data):
+        if data["new_password"] != data["confirm_password"]:
+            raise serializers.ValidationError({
+                "message": "New password and confirm password do not match."
+            })
+        return data

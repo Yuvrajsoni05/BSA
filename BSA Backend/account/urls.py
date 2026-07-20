@@ -1,4 +1,4 @@
-from .views import RegisterView,LoginView,RegisterSerializerShopView,ProfileView,LogoutView,ProfileUpdate,ChangePasswordView
+from .views import RegisterView,LoginView,RegisterSerializerShopView,ProfileView,LogoutView,ProfileUpdate,ChangePasswordView,ForgotPasswordView,RestPasswordView
 from django.urls import path
 
 
@@ -11,7 +11,18 @@ urlpatterns = [
     path("profile/",ProfileView.as_view(),name='profile-view') ,
     path("profile/update/",ProfileUpdate.as_view(),name='profile-update'),
     path("change-password/",ChangePasswordView.as_view(),name='change-password'),
+    path(
+    "forgot-password/",
+    ForgotPasswordView.as_view(),
+    name="forgot-password",
+    ),
+    path(
+    "reset-password/<str:uidb64>/<str:token>/",
+    RestPasswordView.as_view(),
+    name="reset-password",
+    ),
     path("logout/",LogoutView.as_view(),name='logout')
+    
 
     
     
